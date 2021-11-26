@@ -1,8 +1,13 @@
 <template>
 
+<div>
 <h1>test</h1>    
 
+<h1>{{test}}</h1>
 
+<el-button @click="btn"> </el-button>
+
+</div>
 </template>
 
 <script>
@@ -13,6 +18,11 @@ import jsencrypt from 'jsencrypt';
 //const url = location.origin + "/auth/";
 export default {
     name: "test",
+    data() {
+        return {
+            test: "123"
+        }
+    },
     setup() {
         // const key = aes.b64parse(g.aes_key);
         // const iv = aes.b64parse(g.aes_iv);
@@ -31,6 +41,12 @@ export default {
         var rsa_decryptor = new jsencrypt();
         rsa_decryptor.setPrivateKey(g.rsa_priv);
         console.log(rsa_decryptor.decrypt(ct));
+    },
+    methods: {
+        btn() {
+            this.test += 1;
+            console.log(this.test);
+        }
     }
 }
 </script>
