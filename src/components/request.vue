@@ -10,7 +10,7 @@
       <el-button>取消</el-button>
     </el-form-item>
   </el-form>
-  <div class="radius">
+  <div class="radius" v-show="show">
     {{cert}}
   </div>
 </div>
@@ -19,6 +19,7 @@
 <script>
 import axios from 'axios';
 import Cookies from "js-cookie";
+import msg from '../js/msg'
 const url = location.origin + "/ca/getcert";
 
 export default {
@@ -30,6 +31,7 @@ export default {
             
           },
           cert: '',
+          show: false
         }
     },
     methods: {
@@ -44,9 +46,12 @@ export default {
             withCredentials: true
           }
         ).then((response) => {
-
-          this.cert = response.data.cert;
-
+          if (response.data.error == 1) {
+            msg.msFail("您已经拥有公钥文件");
+            this.show = true;
+          } else {
+            this.cert = response.data.cert;
+          }
         })
 
       }
