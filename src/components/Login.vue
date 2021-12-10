@@ -1,16 +1,16 @@
 <template>
 <div>
-  <el-row>
-    <el-col :span="8" :offset="8">
+  <el-row align="center">
+    <el-col :span="10" :offset="7">
       <el-tabs type="border-card">
         <el-tab-pane label="登录">
           <el-form :model="lgForm">
             <el-input type="text" v-model="lgForm.username">
-              <template #prepend>用户名</template>
+              <template #prepend > <span> 用户名  </span></template>
             </el-input>
 
             <el-input type="password" v-model="lgForm.password">
-              <template #prepend>密码</template>
+              <template #prepend> <span > 密码 </span> </template>
             </el-input>
 
             <el-form-item>
@@ -21,15 +21,15 @@
         <el-tab-pane label="注册">
           <el-form :model="regForm">
             <el-input type="text" v-model="regForm.username">
-              <template #prepend>用户名</template>
+              <template #prepend> <span> 用户名 </span> </template>
             </el-input>
 
             <el-input type="password" v-model="regForm.password">
-              <template #prepend>密码</template>
+              <template #prepend> <span> 密码  </span></template>
             </el-input>
 
             <el-input type="password" v-model="regForm.confirm">
-              <template #prepend>重复密码</template>
+              <template #prepend> <span> 重复密码 </span></template>
             </el-input>
             <el-form-item>
               <el-button type="info" @click="register"> 注册 </el-button>
@@ -58,6 +58,10 @@ import { ElMessageBox } from "element-plus";
 axios.defaults.withCredentials = true;
 const aes_key = aes.init_key();
 const aes_iv = aes.init_iv();
+
+console.log(aes.b64stringify(aes_key));
+console.log(aes.b64stringify(aes_iv));
+console.log(aes.encrypt(aes_key, aes_iv, "test"));
 export default {
   name: "Login",
   setup() {
@@ -134,7 +138,7 @@ export default {
         this.msFail("请完整填写表单");
         return;
       }
-      if (this.regForm.username !== this.regForm.confirm) {
+      if (this.regForm.password !== this.regForm.confirm) {
         this.msFail("密码重复错误");
         return;
       }
@@ -162,3 +166,10 @@ export default {
 };
 </script>
 
+<style scoped>
+span {
+
+  float:left;
+  width: 50px;
+}
+</style>

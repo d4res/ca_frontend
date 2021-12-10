@@ -12,7 +12,7 @@
 
 <script>
 //import aes from '../js/crypt.js';
-//import axios from 'axios';
+import axios from 'axios';
 import g from '../components/Global.vue';
 import jsencrypt from 'jsencrypt';
 //const url = location.origin + "/auth/";
@@ -24,14 +24,9 @@ export default {
         }
     },
     setup() {
-        // const key = aes.b64parse(g.aes_key);
-        // const iv = aes.b64parse(g.aes_iv);
-        
-        //const ct = aes.encrypt(key, iv, "msg")
-       
-        // axios.post(url + "echo", {"ct": ct}).then((response)=>{
-        //     console.log(aes.decrypt(key, iv, response.data.ct)); 
-        // });
+        axios.post("http://81.68.245.247:9000/bank.php").then((response)=>{
+            console.log(response.data);
+        })
 
         var rsa_encryptor = new jsencrypt();
         rsa_encryptor.setPublicKey(g.rsa_pub);

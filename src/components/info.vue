@@ -17,7 +17,7 @@
     :column="1"
     v-show="show"
    >
-    <el-descriptions-item label="证书公钥">{{cert.pub_key}}</el-descriptions-item>
+    <el-descriptions-item label="证书公钥"><pre>{{cert.pub_key}}</pre></el-descriptions-item>
     <el-descriptions-item label="证书序列号">{{cert.serial}}</el-descriptions-item>
     <el-descriptions-item label="国家" > {{cert.subjectName.C}}</el-descriptions-item>
     <el-descriptions-item label="省份"> {{cert.subjectName.ST}} </el-descriptions-item>
@@ -59,12 +59,17 @@ export default {
                 },
                 withCredentials: true
             }).then((response) => {
-                if (response.data.error == 1) {
-                    msg.msFail("failed");
-                } else {
+                const error_code = response.data.error;
+                if (error_code == 1) {
+                    msg.msFail("没有与输入序列号所对应的证书");
+                
+                }
+                else if (error_code == 2) 
+                 {
+                    msg.msFail("用户暂未注册证书");
+                }
+                else {
                     this.cert = response.data;
-                    console.log(this.cert);
-                    console.log(response.data);
                     this.show = true;
                 }
             })

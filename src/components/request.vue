@@ -1,6 +1,9 @@
 <template>
 
 <div>
+  <el-row justify="center">
+    <el-button @click="download">下载CSR制作工具</el-button>
+  </el-row>
       <el-form ref="form" :model="form" label-width="120px">
     <el-form-item label="CSR">
       <el-input v-model="form.csr" type="textarea" placeholder="请将csr文件内容粘贴于此"></el-input>
@@ -13,6 +16,7 @@
   <div class="radius" v-show="show">
     {{cert}}
   </div>
+
 </div>
 </template>
 
@@ -31,7 +35,8 @@ export default {
             
           },
           cert: '',
-          show: false
+          show: false,
+          serial: '',
         }
     },
     methods: {
@@ -46,14 +51,19 @@ export default {
             withCredentials: true
           }
         ).then((response) => {
-          if (response.data.error == 1) {
+          if (response.data.error == 2) {
             msg.msFail("您已经拥有公钥文件");
-            this.show = true;
-          } else {
-            this.cert = response.data.cert;
+            // this.show = true;
+          } else if (response.data.error == 1) {
+            msg.msFail("证书格式不正确");
+          }else {
+            msg.msSuccess("申请成功 ");
           }
         })
 
+      },
+      download() {
+        window.location = location.origin + ":8000/main.zip";
       }
     }
 }
