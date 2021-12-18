@@ -42,6 +42,7 @@ import axios from 'axios'
 import Cookies from 'js-cookie'
 import msg from '../js/msg'
 import Clipboard from 'clipboard'
+import check from '../js/check'
 const url = location.origin + "/ca/download";
 export default {
     name: "download",
@@ -51,6 +52,9 @@ export default {
             show: false,
             cert: ''
         }
+    },
+    beforeCreate() {
+        check.check();
     },
     methods: {
         submit() {
@@ -63,7 +67,7 @@ export default {
             }
           ).then((response)=>{
               if (response.data.error == 1) {
-                  msg.msFail("fail");
+                  msg.msFail("用户暂未注册证书");
               } else {
                   this.cert = response.data.cert;
                   this.show = true;

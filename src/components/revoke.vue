@@ -16,6 +16,7 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import msg from '../js/msg';
+import check from '../js/check';
 const url = location.origin + "/ca/revoke";
 
 export default { 
@@ -25,8 +26,16 @@ export default {
       serial: ''
     }
   },
+  beforeCreate() {
+    check.check();
+  },
   methods: {
     submit() {
+
+      if (this.serial == '') {
+        msg.msFail("您输入的内容为空");
+        return;
+      }
       axios.post(url, {"serial": this.serial}, {
         headers: {
           "X-CSRF-TOKEN": Cookies.get("X-CSRF-TOKEN"),

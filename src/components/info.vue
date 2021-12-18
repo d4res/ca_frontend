@@ -23,6 +23,9 @@
     <el-descriptions-item label="省份"> {{cert.subjectName.ST}} </el-descriptions-item>
     <el-descriptions-item label="城市"> {{cert.subjectName.L}}</el-descriptions-item>
     <el-descriptions-item label="组织"> {{cert.subjectName.O}}</el-descriptions-item>
+
+    <el-descriptions-item label="生效日期"> {{cert.start}}</el-descriptions-item>
+    <el-descriptions-item label="结束日期"> {{cert.end}} </el-descriptions-item>
   </el-descriptions>
 </div>
 </template>
@@ -31,6 +34,7 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import msg from '../js/msg';
+import check from '../js/check';
 const url = location.origin + "/ca/info";
 export default {
     name: 'info',
@@ -50,6 +54,9 @@ export default {
             show: false,
             serial: ''
         }
+    },
+    beforeCreate() {
+        check.check();
     },
     methods: {
         submit() {

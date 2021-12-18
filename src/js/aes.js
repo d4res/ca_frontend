@@ -22,13 +22,11 @@ function encrypt(key, iv, pt) {
 }
 
 function decrypt(key, iv, ct) {
-
     var decrypted = CryptoJS.AES.decrypt(ct, key, {
         iv: iv,
         mode: CryptoJS.mode.CBC,
         padding: CryptoJS.pad.Pkcs7,
     });
-
     return decrypted.toString(CryptoJS.enc.Utf8);
 }
 
